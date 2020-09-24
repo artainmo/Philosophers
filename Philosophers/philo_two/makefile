@@ -1,0 +1,19 @@
+SRC = philo_two.c \
+			actions.c \
+			handle_struct.c \
+			utils.c \
+			utils2.c
+
+OBJ = $(SRC:.c=.o) #transform c files in object files
+
+all: $(OBJ)
+	gcc  -Wall -Wextra -Werror $(OBJ) -lpthread -o philo_two #-o is to define executable name
+	#-lpthread is necessary for threads compilation
+
+clean:
+	rm -f $(OBJ)
+
+fclean:
+	rm -f $(OBJ) philo_two
+
+re: fclean all
