@@ -1,0 +1,5 @@
+./philo_one 6 1000 2000 2000 5 //Verify rapid death
+./philo_one 3 8000 2000 2000 //Infinity
+./philo_one 2 8000 3000 3000 5 //verify eat count feature
+./philo_one 7 8000 3000 3000 1 //verify eat count feature
+./philo_one 7 8000 3000 3000 0 //verify eat count feature

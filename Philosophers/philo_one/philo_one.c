@@ -92,7 +92,7 @@ static int create_philosophers(philosopher *p)
       error("Creation of thread failed\n");
       return (0);
     }
-    usleep(50); //If you make them spawn to quickly they can be stuck with one fork, unable to get the second fork and never eat and die
+    usleep(50); //If you make them spawn too quickly they can be stuck with one fork, unable to get the second fork and never eat and die
     i++;
   }
   pthread_join(id, NULL); //Before freeing the main philosopher class, the other classes partly point on, wait the threads to terminate

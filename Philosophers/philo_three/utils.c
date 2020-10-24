@@ -54,7 +54,7 @@ int status_change(philosopher *p, char *message)
     write(1, "number of times each philosopher must eat attained\n", 52);
     free_philo(p);
     kill(0, SIGKILL); //And finally the process kills of all processes
-    //-1 as pid value, causes all the processes in computer o finish and causes bugs... 0 causes main and child processes to finish
+    //-1 as pid value, causes all the processes in computer to finish and causes bugs... 0 causes main and child processes to finish
   }
   if (*p->g_dead == 1)
   {
@@ -88,7 +88,7 @@ int dead_message(philosopher *p, char *tim)
   free(tim);
   free_philo(p);
   kill(0, SIGKILL);
-  //-1 as pid value, causes all the processes in computer o finish and causes bugs... 0 causes main and child processes to finish
+  //-1 as pid value, causes all the processes in computer to finish and causes bugs... 0 causes main and child processes to finish
   return (0);
 }
 
