@@ -3,3 +3,4 @@
 # Protect mallocs - use error function
 # Look for leaks
 # Do the norm
+# Check subject
