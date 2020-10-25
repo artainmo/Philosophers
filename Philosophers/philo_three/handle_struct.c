@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_struct.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: artainmo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/10/25 16:24:15 by artainmo          #+#    #+#             */
+/*   Updated: 2020/10/25 16:24:51 by artainmo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo_three.h"
 
-params *init_params(int argc, char **argv)
+params		*init_params(int argc, char **argv)
 {
   params *ret;
 
@@ -17,7 +29,7 @@ params *init_params(int argc, char **argv)
   return (ret);
 }
 
-philosopher *init_philo(int argc, char **argv)
+philosopher	*init_philo(int argc, char **argv)
 {
   philosopher *philo;
 
@@ -25,9 +37,9 @@ philosopher *init_philo(int argc, char **argv)
     return (error("Malloc failed\n"));
   if ((philo->p = init_params(argc, argv)) == 0)
     return (error("Malloc failed\n"));
-  if ((philo->forks = sem_open("/forks", O_CREAT, 644, ft_atoi(argv[1]))) == SEM_FAILED) //Do not need to be malloced first interestingly
+  if ((philo->forks = sem_open("/forks", O_CREAT, 644, ft_atoi(argv[1])))
+  == SEM_FAILED)
     return (error("Semaphore opening failed\n"));
-  //First indicate a name starting with / to be able to recognize the already existing semaphore, second argument is a flag to create the sem if it does not already exist, third argument is the permission with 644 being read and write access, lastly indicate the number of forks or the semaphore values
   if ((philo->write_lock = sem_open("/write", O_CREAT, 644, 1)) == SEM_FAILED)
     return (error("Semaphore opening failed\n"));
   if ((philo->dead_lock = sem_open("/dead", O_CREAT, 644, 1)) == SEM_FAILED)
@@ -37,7 +49,7 @@ philosopher *init_philo(int argc, char **argv)
   return (philo);
 }
 
-philosopher *new_philo(philosopher *old_philo, int id)
+philosopher	*new_philo(philosopher *old_philo, int id)
 {
   philosopher *philo;
 

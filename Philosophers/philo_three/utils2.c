@@ -1,13 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils2.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: artainmo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/10/25 16:36:07 by artainmo          #+#    #+#             */
+/*   Updated: 2020/10/25 16:39:45 by artainmo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo_three.h"
 
-int ft_strlen(const char *str)
+int			ft_strlen(const char *str)
 {
-  int i;
+	int i;
 
-  i = 0;
-  while(str[i] != 0)
-    i++;
-  return (i);
+	i = 0;
+	while(str[i] != 0)
+		i++;
+	return (i);
 }
 
 
@@ -51,7 +63,7 @@ int			ft_atoi(const char *str)
 	c = 0;
 	mc = 0;
 	while (str[i] == '\n' || str[i] == ' ' || str[i] == '\t' || str[i] == '\v'
-				|| str[i] == '\f' || str[i] == '\r')
+			|| str[i] == '\f' || str[i] == '\r')
 		i++;
 	check_plus_minus(str, &i, &mc, &c);
 	check_digits(str, &i, &res);
