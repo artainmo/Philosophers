@@ -12,63 +12,43 @@
 
 #include "philo_two.h"
 
-long long int			get_miliseconds(struct timeval t)
-{
-	return ((t.tv_sec * 1000) + (t.tv_usec / 1000));
-}
-
-long long int			get_time(void)
-{
-	struct timeval	current_time;
-
-	gettimeofday(&current_time, 0);
-	return (get_miliseconds(current_time));
-}
-
-static long long int	get_timestamp(philosopher *p)
-{
-	struct timeval current_time;
-
-	gettimeofday(&current_time, 0);
-	return (get_miliseconds(current_time) - p->start_time);
-}
-
-static void				put_message(philosopher *p, char *message)
+int						dead_message(philosopher *p, char *tim)
 {
 	char	*timestamp;
 	char	*name;
 	char	*line;
 	char	*tmp;
 
+	sem_wait(p->write_lock);
 	name = ft_itoa(p->id);
-	timestamp = ft_itoa((int)get_timestamp(p));
-	line = ft_strjoin(timestamp, "\t");
+	line = ft_strjoin(tim, "\t");
 	tmp = line;
 	line = ft_strjoin(line, name);
 	free(tmp);
 	tmp = line;
-	line = ft_strjoin(line, message);
+	line = ft_strjoin(line, "\tdied\n");
 	free(tmp);
 	write(1, line, ft_strlen(line));
 	free(name);
-	free(timestamp);
-}
-
-int						status_change(philosopher *p, char *message)
-{
-	int total_eat;
-
-	total_eat = p->p->number_of_times_each_philosopher_must_eat *
-				p->p->number_of_philosophers;
-	sem_wait(p->write_lock);
-	if (g_dead == 1 ||
-			(p->p->number_of_times_each_philosopher_must_eat != -1
-						&& total_eat <= g_eating_counter))
-	{
-		sem_post(p->write_lock);
-		return (1);
-	}
-	put_message(p, message);
+	free(tim);
 	sem_post(p->write_lock);
 	return (0);
+}
+
+void					*error(char *str)
+{
+	write(1, str, ft_strlen(str));
+	return (0);
+}
+
+void					free_philo(philosopher *p)
+{
+	sem_unlink("/write");
+	sem_unlink("/dead");
+	sem_unlink("/forks");
+	sem_close(p->write_lock);
+	sem_close(p->dead_lock);
+	sem_close(p->forks);
+	free(p->p);
+	free(p);
 }

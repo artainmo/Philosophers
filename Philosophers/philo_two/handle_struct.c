@@ -6,7 +6,7 @@
 /*   By: artainmo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/25 15:22:58 by artainmo          #+#    #+#             */
-/*   Updated: 2020/10/25 15:23:51 by artainmo         ###   ########.fr       */
+/*   Updated: 2020/10/25 15:46:38 by artainmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,13 @@ params		*init_params(int argc, char **argv)
 	return (ret);
 }
 
+/*
+**First indicate a name starting with / to be able to recognize the already
+**existing semaphore, second argument is a flag to create the sem if it does
+**not already exist, third argument is the permission with 644 being read
+**and write access, lastly indicate the number of forks or the semaphore values
+*/
+
 philosopher	*init_philo(int argc, char **argv)
 {
 	philosopher *philo;
@@ -37,13 +44,9 @@ philosopher	*init_philo(int argc, char **argv)
 		return (error("Malloc failed\n"));
 	if ((philo->p = init_params(argc, argv)) == 0)
 		return (error("Malloc failed\n"));
-	if ((philo->forks = sem_open("/forks", O_CREAT, 644, ft_atoi(argv[1]))) == SEM_FAILED) //Do not need to be malloced first interestingly
-	{
-		// write(1, strerror(errno), strlen(strerror(errno)));
-		// write(1,"\n",1);
+	if ((philo->forks = sem_open("/forks", O_CREAT, 644, ft_atoi(argv[1])))
+			== SEM_FAILED)
 		return (error("Semaphore opening failed\n"));
-	}
-	//First indicate a name starting with / to be able to recognize the already existing semaphore, second argument is a flag to create the sem if it does not already exist, third argument is the permission with 644 being read and write access, lastly indicate the number of forks or the semaphore values
 	if ((philo->write_lock = sem_open("/write", O_CREAT, 644, 1)) == SEM_FAILED)
 		return (error("Semaphore opening failed\n"));
 	if ((philo->dead_lock = sem_open("/dead", O_CREAT, 644, 1)) == SEM_FAILED)

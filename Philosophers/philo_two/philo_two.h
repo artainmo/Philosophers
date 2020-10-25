@@ -6,7 +6,7 @@
 /*   By: artainmo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/25 15:25:05 by artainmo          #+#    #+#             */
-/*   Updated: 2020/10/25 15:28:10 by artainmo         ###   ########.fr       */
+/*   Updated: 2020/10/25 16:03:33 by artainmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,25 +26,25 @@
 extern int g_eating_counter;
 extern int g_dead;
 
-typedef struct	s_params
+typedef	struct	s_params
 {
-  int			number_of_philosophers;
-  long long int	time_to_die;
-  int			time_to_eat;
-  int			time_to_sleep;
-  int			number_of_times_each_philosopher_must_eat;
+	int				number_of_philosophers;
+	long long int	time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				number_of_times_each_philosopher_must_eat;
 }				t_params;
 
-typedef struct	s_philosopher
+typedef	struct	s_philosopher
 {
-  int			id;
-  sem_t			*forks;
-  long long int	start_time;
-  long long int	last_meal_time;
-  int			is_eating;
-  sem_t			*write_lock;
-  sem_t			*dead_lock;
-  params		*p;
+	int				id;
+	sem_t			*forks;
+	long long int	start_time;
+	long long int	last_meal_time;
+	int				is_eating;
+	sem_t			*write_lock;
+	sem_t			*dead_lock;
+	params			*p;
 }				t_philosopher;
 
 int				dies(philosopher *p, char *tim);

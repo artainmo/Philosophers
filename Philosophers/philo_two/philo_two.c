@@ -6,48 +6,67 @@
 /*   By: artainmo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/25 15:24:11 by artainmo          #+#    #+#             */
-/*   Updated: 2020/10/25 15:24:51 by artainmo         ###   ########.fr       */
+/*   Updated: 2020/10/25 15:55:28 by artainmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_two.h"
 
-//All of the forks will be simulated with a semaphore with value number of forks, each time a philosopher takes a fork the semaphore loses a value, when semaphore is equal to 0, 0 forks are on the table and philosophers have to wait
-//The mutexes used to control the write lock and dead lock are replaced by binary semaphore or simply a semaphore with intial value 1
-
-//If creation of semaphore fails (permission denied) it is because the semaphore has not been destroyed and the computer keeps it in memory even after the program has finished, so the solution is to always unlink and close your semaphores or restart computer
-//Caution when testing infinite loop and quiting it with control-c, you do not unlink the semaphore, thus above error will occur, use underlying main to resolve problem without changing computers
-// #include <semaphore.h>
-//
-// int main()
-// {
-// 	sem_unlink("/write");
-// 	sem_unlink("/dead");
-// 	sem_unlink("/forks");
-// }
-
-//If time does not advance, but goes very slightly backwards this is possible because every thread has its own starting time that comes slghtly after the prior thread.
-
-//Rare not understood, probably linked to semaphore lib, bug of directly quiting the program with a philospher dead at time_before_dead
-//Caused by fault in calculation of "since_last_meal = current_time - p->last_meal_time;" while they all are equal to long long int -> show with commented printf that error makes no sense and only occurs in rare random cases
-//Looks similar to not understood bug -> bug occurs whereas after a philospher dies, number of philospher becomes 0 and thread enters the eat_count write, for unknown reason
-//Those bugs do not exist with use of mutex and are thus probably associated with semaphore lib
-
-// ./philo_two 6 1000 2000 2000 5
-// ./philo_two 3 8000 2000 2000
-// ./philo_two 2 8000 3000 3000 5
-// ./philo_two 7 8000 3000 3000 1
-// ./philo_two 7 8000 3000 3000 0
+/*
+**All of the forks will be simulated with a semaphore with value number of
+**forks, each time a philosopher takes a fork the semaphore loses a value,
+**when semaphore is equal to 0, 0 forks are on the table and philosophers
+**have to wait The mutexes used to control the write lock and dead lock are
+**replaced by binary semaphore or simply a semaphore with intial value 1
+**
+**If creation of semaphore fails (permission denied) it is because the
+**semaphore has not been destroyed and the computer keeps it in memory even
+**after the program has finished, so the solution is to always unlink and close
+**your semaphores or restart computer.
+**Caution when testing infinite loop and quiting it with control-c, you do not
+**unlink the semaphore, thus above error will occur, use underlying main
+**to resolve problem without changing computers
+** #include <semaphore.h>
+**
+** int main()
+** {
+** 	sem_unlink("/write");
+** 	sem_unlink("/dead");
+** 	sem_unlink("/forks");
+** }
+**
+**If time does not advance, but goes very slightly backwards this is possible
+**because every thread has its own starting time that comes slghtly after the
+**prior thread.
+**
+**Rare not understood, probably linked to semaphore lib, bug of directly
+**quiting the program with a philospher dead at time_before_dead
+**Caused by fault in calculation of
+**"since_last_meal = current_time - p->last_meal_time;" while they all are
+**equal to long long int -> show with commented printf that error makes no
+**sense and only occurs in rare random cases
+**Looks similar to not understood bug -> bug occurs whereas after a philospher
+**dies, number of philospher becomes 0 and thread enters the eat_count write,
+**for unknown reason
+**Those bugs do not exist with use of mutex and
+**are thus probably associated with semaphore lib
+**
+** ./philo_two 6 1000 2000 2000 5
+** ./philo_two 3 8000 2000 2000
+** ./philo_two 2 8000 3000 3000 5
+** ./philo_two 7 8000 3000 3000 1
+** ./philo_two 7 8000 3000 3000 0
+*/
 
 int g_dead = 0;
-int eat_count = 0;
+int g_eat_count = 0;
 int g_eating_counter = 0;
 
 static void	*dead_check(void *arg)
 {
-	philosopher *p;
-	long long int current_time;
-	long long int since_last_meal;
+	philosopher		*p;
+	long long int	current_time;
+	long long int	since_last_meal;
 
 	p = (philosopher *)arg;
 	p->is_eating = 0;
@@ -67,9 +86,9 @@ static void	*dead_check(void *arg)
 				&& p->p->number_of_times_each_philosopher_must_eat * p->p->number_of_philosophers <= g_eating_counter)
 		{
 			sem_wait(p->write_lock);
-			if (eat_count == 0 && g_dead != 1) //To block the write of eat_count, because bug occurs whereas after a philospher dies, number of philospher becomes 0 and thread enters the eat_count write, for unknown reason
+			if (g_eat_count == 0 && g_dead != 1) //To block the write of eat_count, because bug occurs whereas after a philospher dies, number of philospher becomes 0 and thread enters the eat_count write, for unknown reason
 				write(1, "number of times each philosopher must eat attained\n", 52);
-			eat_count = 1;
+			g_eat_count = 1;
 			sem_post(p->write_lock);
 			break ;
 		}
@@ -79,13 +98,13 @@ static void	*dead_check(void *arg)
 
 static void	*philo_start(void *arg)
 {
-	philosopher *p;
-	pthread_t id;
+	philosopher	*p;
+	pthread_t	id;
 
 	p = (philosopher *)arg;
 	p->start_time = get_time();
 	p->last_meal_time = get_time();
-	if (pthread_create(&id , NULL, dead_check, p))
+	if (pthread_create(&id, NULL, dead_check, p))
 	{
 		error("Creation of thread failed\n");
 		return (0);
@@ -105,9 +124,9 @@ static void	*philo_start(void *arg)
 
 static int	create_philosophers(philosopher *p)
 {
-	philosopher *new;
-	pthread_t id;
-	int i;
+	philosopher	*new;
+	pthread_t	id;
+	int			i;
 
 	i = 1;
 	while (i <= p->p->number_of_philosophers)
@@ -125,7 +144,6 @@ static int	create_philosophers(philosopher *p)
 	free_philo(p);
 	return (1);
 }
-
 
 int			main(int argc, char **argv)
 {

@@ -6,7 +6,7 @@
 /*   By: artainmo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/25 15:22:05 by artainmo          #+#    #+#             */
-/*   Updated: 2020/10/25 15:22:52 by artainmo         ###   ########.fr       */
+/*   Updated: 2020/10/25 15:41:20 by artainmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,12 @@ int			sleeps(philosopher *p)
 	return (0);
 }
 
-
 static int	take_fork(philosopher *p)
 {
-	sem_wait(p->forks); //Locks one of the semaphore's values, if all semaphore values are locked the thread waits until one gets unlocked
+	sem_wait(p->forks);
 	if (status_change(p, "\thas taken a fork\n") == 1)
 		return (1);
 	return (0);
-}
-
-static void	leave_fork(philosopher *p)
-{
-	sem_post(p->forks); //Unlocks one of the semaphore's values
 }
 
 int			eat(philosopher *p)
@@ -66,7 +60,7 @@ int			eat(philosopher *p)
 	usleep(p->p->time_to_eat);
 	p->last_meal_time = get_time();
 	p->is_eating = 0;
-	leave_fork(p);
-	leave_fork(p);
+	sem_post(p->forks);
+	sem_post(p->forks);
 	return (0);
 }
