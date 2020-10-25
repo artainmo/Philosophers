@@ -6,13 +6,14 @@
 /*   By: artainmo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/25 16:25:08 by artainmo          #+#    #+#             */
-/*   Updated: 2020/10/25 16:26:39 by artainmo         ###   ########.fr       */
+/*   Updated: 2020/10/25 18:30:23 by artainmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_three.h"
 
-/*named semaphores, sem_open creates named semaphores contrary to sem_init,
+/*
+**named semaphores, sem_open creates named semaphores contrary to sem_init,
 **are able to communicate between processes while unnamed semaphores can only
 **communicate between threads
 **
@@ -119,7 +120,6 @@ static int	create_philosophers(philosopher *p)
 	free_philo(p);
 	return (1);
 }
-
 
 int			main(int argc, char **argv)
 {

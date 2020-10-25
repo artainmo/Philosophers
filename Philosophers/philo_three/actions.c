@@ -6,7 +6,7 @@
 /*   By: artainmo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/25 16:22:27 by artainmo          #+#    #+#             */
-/*   Updated: 2020/10/25 16:24:10 by artainmo         ###   ########.fr       */
+/*   Updated: 2020/10/25 18:28:08 by artainmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int			sleeps(philosopher *p)
 	usleep(p->p->time_to_sleep);
 	return (0);
 }
-
 
 static int	take_fork(philosopher *p)
 {
