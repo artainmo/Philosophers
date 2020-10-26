@@ -14,8 +14,8 @@
 
 /*
 **All of the forks will be simulated with a semaphore with value number of
-**forks, each time a philosopher takes a fork the semaphore loses a value,
-**when semaphore is equal to 0, 0 forks are on the table and philosophers
+**forks, each time a t_philosopher takes a fork the semaphore loses a value,
+**when semaphore is equal to 0, 0 forks are on the table and t_philosophers
 **have to wait The mutexes used to control the write lock and dead lock are
 **replaced by binary semaphore or simply a semaphore with intial value 1
 **
@@ -65,11 +65,11 @@ int g_error = 0;
 
 static void	*dead_check(void *arg)
 {
-	philosopher		*p;
+	t_philosopher		*p;
 	long long int	current_time;
 	long long int	since_last_meal;
 
-	p = (philosopher *)arg;
+	p = (t_philosopher *)arg;
 	p->is_eating = 0;
 	while (1)
 	{
@@ -83,12 +83,12 @@ static void	*dead_check(void *arg)
 			dies(p, ft_itoa(current_time - p->start_time));
 			break ;
 		}
-		if (p->p->number_of_times_each_philosopher_must_eat != -1
-				&& p->p->number_of_times_each_philosopher_must_eat * p->p->number_of_philosophers <= g_eating_counter)
+		if (p->p->number_of_times_each_t_philosopher_must_eat != -1
+				&& p->p->number_of_times_each_t_philosopher_must_eat * p->p->number_of_t_philosophers <= g_eating_counter)
 		{
 			sem_wait(p->write_lock);
 			if (g_eat_count == 0 && g_dead != 1) //To block the write of eat_count, because bug occurs whereas after a philospher dies, number of philospher becomes 0 and thread enters the eat_count write, for unknown reason
-				write(1, "number of times each philosopher must eat attained\n", 52);
+				write(1, "number of times each philosopher must eat attained\n", 51);
 			g_eat_count = 1;
 			sem_post(p->write_lock);
 			break ;
@@ -99,10 +99,10 @@ static void	*dead_check(void *arg)
 
 static void	*philo_start(void *arg)
 {
-	philosopher	*p;
+	t_philosopher	*p;
 	pthread_t	id;
 
-	p = (philosopher *)arg;
+	p = (t_philosopher *)arg;
 	p->start_time = get_time();
 	p->last_meal_time = get_time();
 	if (pthread_create(&id, NULL, dead_check, p))
@@ -120,14 +120,14 @@ static void	*philo_start(void *arg)
 	return (0);
 }
 
-static int	create_philosophers(philosopher *p)
+static int	create_t_philosophers(t_philosopher *p)
 {
-	philosopher	*new;
+	t_philosopher	*new;
 	pthread_t	id;
 	int			i;
 
 	i = 1;
-	while (i <= p->p->number_of_philosophers)
+	while (i <= p->p->number_of_t_philosophers)
 	{
 		new = new_philo(p, i);
 		if (pthread_create(&id, NULL, philo_start, new) != 0)
@@ -147,7 +147,7 @@ static int	create_philosophers(philosopher *p)
 
 int			main(int argc, char **argv)
 {
-	philosopher *p;
+	t_philosopher *p;
 
 	if (argc != 5 && argc != 6)
 	{
@@ -156,18 +156,18 @@ int			main(int argc, char **argv)
 	}
 	if ((p = init_philo(argc, argv)) == 0)
 		return (1);
-	if (p->p->number_of_philosophers < 2)
+	if (p->p->number_of_t_philosophers < 2)
 	{
-		error("Not enough philosophers\n");
+		error("Not enough t_philosophers\n");
 		free_philo(p);
 		return (1);
 	}
-	if (p->p->number_of_times_each_philosopher_must_eat == 0)
+	if (p->p->number_of_times_each_t_philosopher_must_eat == 0)
 	{
-		write(1, "number of times each philosopher must eat attained\n", 52);
+		write(1, "number of times each philosopher must eat attained\n", 51);
 		free_philo(p);
 		return (1);
 	}
-	if (create_philosophers(p) == 0)
+	if (create_t_philosophers(p) == 0)
 		return (1);
 }

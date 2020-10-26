@@ -25,7 +25,7 @@ long long int			get_time(void)
 	return (get_miliseconds(current_time));
 }
 
-static long long int	get_timestamp(philosopher *p)
+static long long int	get_timestamp(t_philosopher *p)
 {
 	struct timeval current_time;
 
@@ -33,7 +33,7 @@ static long long int	get_timestamp(philosopher *p)
 	return (get_miliseconds(current_time) - p->start_time);
 }
 
-static void				put_message(philosopher *p, char *message)
+static void				put_message(t_philosopher *p, char *message)
 {
 	char	*timestamp;
 	char	*name;
@@ -54,15 +54,15 @@ static void				put_message(philosopher *p, char *message)
 	free(timestamp);
 }
 
-int						status_change(philosopher *p, char *message)
+int						status_change(t_philosopher *p, char *message)
 {
 	int total_eat;
 
-	total_eat = p->p->number_of_times_each_philosopher_must_eat *
-				p->p->number_of_philosophers;
+	total_eat = p->p->number_of_times_each_t_philosopher_must_eat *
+				p->p->number_of_t_philosophers;
 	sem_wait(p->write_lock);
 	if (g_dead == 1 ||
-			(p->p->number_of_times_each_philosopher_must_eat != -1
+			(p->p->number_of_times_each_t_philosopher_must_eat != -1
 						&& total_eat <= g_eating_counter))
 	{
 		sem_post(p->write_lock);

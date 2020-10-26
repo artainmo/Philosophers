@@ -12,20 +12,20 @@
 
 #include "philo_two.h"
 
-params		*init_params(int argc, char **argv)
+t_params		*init_params(int argc, char **argv)
 {
-	params *ret;
+	t_params *ret;
 
-	if ((ret = malloc(sizeof(params))) == 0)
+	if ((ret = malloc(sizeof(t_params))) == 0)
 		return (error("Malloced failed\n"));
-	ret->number_of_philosophers = ft_atoi(argv[1]);
+	ret->number_of_t_philosophers = ft_atoi(argv[1]);
 	ret->time_to_die = ft_atoi(argv[2]);
 	ret->time_to_eat = ft_atoi(argv[3]) * 1000;
 	ret->time_to_sleep = ft_atoi(argv[4]) * 1000;
 	if (argc == 5)
-		ret->number_of_times_each_philosopher_must_eat = -1;
+		ret->number_of_times_each_t_philosopher_must_eat = -1;
 	else
-		ret->number_of_times_each_philosopher_must_eat = ft_atoi(argv[5]);
+		ret->number_of_times_each_t_philosopher_must_eat = ft_atoi(argv[5]);
 	return (ret);
 }
 
@@ -36,11 +36,11 @@ params		*init_params(int argc, char **argv)
 **and write access, lastly indicate the number of forks or the semaphore values
 */
 
-philosopher	*init_philo(int argc, char **argv)
+t_philosopher	*init_philo(int argc, char **argv)
 {
-	philosopher *philo;
+	t_philosopher *philo;
 
-	if ((philo = malloc(sizeof(philosopher))) == 0)
+	if ((philo = malloc(sizeof(t_philosopher))) == 0)
 		return (error("Malloc failed\n"));
 	if ((philo->p = init_params(argc, argv)) == 0)
 		return (error("Malloc failed\n"));
@@ -54,11 +54,11 @@ philosopher	*init_philo(int argc, char **argv)
 	return (philo);
 }
 
-philosopher	*new_philo(philosopher *old_philo, int id)
+t_philosopher	*new_philo(t_philosopher *old_philo, int id)
 {
-	philosopher *philo;
+	t_philosopher *philo;
 
-	if ((philo = malloc(sizeof(philosopher))) == 0)
+	if ((philo = malloc(sizeof(t_philosopher))) == 0)
 		return (error("Malloc failed\n"));
 	philo->p = old_philo->p;
 	philo->forks = old_philo->forks;

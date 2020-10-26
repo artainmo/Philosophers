@@ -12,7 +12,7 @@
 
 #include "philo_two.h"
 
-int						dead_message(philosopher *p, char *tim)
+int						dead_message(t_philosopher *p, char *tim)
 {
 	char	*timestamp;
 	char	*name;
@@ -48,7 +48,7 @@ void					*error(char *str)
 	return (0);
 }
 
-void					free_philo(philosopher *p)
+void					free_philo(t_philosopher *p)
 {
 	sem_unlink("/write");
 	sem_unlink("/dead");
