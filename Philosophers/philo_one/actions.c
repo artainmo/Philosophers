@@ -18,6 +18,7 @@ int	dies(t_philosopher *p, char *tim)
 	if (g_dead == 1)
 	{
 		pthread_mutex_unlock(p->dead_lock);
+		free(tim);
 		return (1);
 	}
 	g_dead = 1;
