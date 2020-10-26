@@ -158,7 +158,7 @@ int			main(int argc, char **argv)
 		return (1);
 	if (p->p->number_of_t_philosophers < 2)
 	{
-		error("Not enough t_philosophers\n");
+		error("Not enough philosophers\n");
 		free_philo(p);
 		return (1);
 	}

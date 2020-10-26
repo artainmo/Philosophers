@@ -17,7 +17,7 @@
 **and causes bugs... 0 causes main and child processes to finish
 */
 
-int						dead_message(philosopher *p, char *tim)
+int						dead_message(t_philosopher *p, char *tim)
 {
 	char	*timestamp;
 	char	*name;
@@ -51,13 +51,13 @@ int						dead_message(philosopher *p, char *tim)
 **is about to die freeing is not necessary
 */
 
-void					*error(char *str)
+void					error(char *str)
 {
 	write(1, str, ft_strlen(str));
 	kill(0, SIGKILL);
 }
 
-void					free_philo(philosopher *p)
+void					free_philo(t_philosopher *p)
 {
 	sem_unlink("/write");
 	sem_unlink("/dead");

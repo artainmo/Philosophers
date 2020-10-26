@@ -48,11 +48,11 @@
 
 static void	*dead_check(void *arg)
 {
-	philosopher		*p;
+	t_philosopher		*p;
 	long long int	current_time;
 	long long int	since_last_meal;
 
-	p = (philosopher *)arg;
+	p = (t_philosopher *)arg;
 	p->is_eating = 0;
 	while (1)
 	{
@@ -69,10 +69,10 @@ static void	*dead_check(void *arg)
 
 static void	*philo_start(void *arg)
 {
-	philosopher	*p;
+	t_philosopher	*p;
 	pthread_t	id;
 
-	p = (philosopher *)arg;
+	p = (t_philosopher *)arg;
 	p->start_time = get_time();
 	p->last_meal_time = get_time();
 	if (pthread_create(&id, NULL, dead_check, p))
@@ -90,14 +90,14 @@ static void	*philo_start(void *arg)
 	return (0);
 }
 
-static int	create_philosophers(philosopher *p)
+static int	create_t_philosophers(t_philosopher *p)
 {
-	philosopher	*new;
+	t_philosopher	*new;
 	pid_t		pid;
 	int			i;
 
 	i = 1;
-	while (i <= p->p->number_of_philosophers)
+	while (i <= p->p->number_of_t_philosophers)
 	{
 		new = new_philo(p, i);
 		if ((pid = fork()) == -1)
@@ -117,7 +117,7 @@ static int	create_philosophers(philosopher *p)
 
 int			main(int argc, char **argv)
 {
-	philosopher *p;
+	t_philosopher *p;
 
 	if (argc != 5 && argc != 6)
 	{
@@ -126,18 +126,18 @@ int			main(int argc, char **argv)
 	}
 	if ((p = init_philo(argc, argv)) == 0)
 		return (1);
-	if (p->p->number_of_philosophers < 2)
+	if (p->p->number_of_t_philosophers < 2)
 	{
 		write(1, "Not enough philosophers\n", 24);
 		free_philo(p);
 		return (1);
 	}
-	if (p->p->number_of_times_each_philosopher_must_eat == 0)
+	if (p->p->number_of_times_each_t_philosopher_must_eat == 0)
 	{
-		write(1, "number of times each philosopher must eat attained\n", 52);
+		write(1, "number of times each philosopher must eat attained\n", 51);
 		free_philo(p);
 		return (1);
 	}
-	if (create_philosophers(p) == 0)
+	if (create_t_philosophers(p) == 0)
 		return (1);
 }
