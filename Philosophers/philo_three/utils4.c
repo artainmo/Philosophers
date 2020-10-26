@@ -44,7 +44,7 @@ char		*ft_itoa(int n)
 
 	counter = ft_counter(n) - 1;
 	if (!(str = malloc(sizeof(char) * (ft_counter(n) + 1))))
-		return (0);
+		error("Malloc failed\n");
 	if (n == -2147483648)
 	{
 		if (!(str = ft_strdup("-2147483648")))
@@ -88,7 +88,7 @@ char		*ft_strjoin(char const *s1, char const *s2)
 	if (!s2)
 		return (ft_strdup(s1));
 	if (!(str = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1))))
-		return (0);
+		error("Malloc failed\n");;
 	ft_cat(s1, str, &i);
 	while (s2[l])
 	{

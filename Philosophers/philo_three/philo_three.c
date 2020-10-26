@@ -76,10 +76,7 @@ static void	*philo_start(void *arg)
 	p->start_time = get_time();
 	p->last_meal_time = get_time();
 	if (pthread_create(&id, NULL, dead_check, p))
-	{
 		error("Creation of thread failed\n");
-		return (0);
-	}
 	while (1)
 	{
 		if (eat(p) == 1)
@@ -104,10 +101,7 @@ static int	create_philosophers(philosopher *p)
 	{
 		new = new_philo(p, i);
 		if ((pid = fork()) == -1)
-		{
 			error("Forking process failed\n");
-			return (0);
-		}
 		if (!pid)
 		{
 			philo_start(new);
@@ -127,14 +121,15 @@ int			main(int argc, char **argv)
 
 	if (argc != 5 && argc != 6)
 	{
-		error("Error in program arguments\n");
+		write(1, "Error in program arguments\n", 27);
 		return (1);
 	}
 	if ((p = init_philo(argc, argv)) == 0)
 		return (1);
 	if (p->p->number_of_philosophers < 2)
 	{
-		error("Not enough philosophers\n");
+		write(1, "Not enough philosophers\n", 24);
+		free_philo(p);
 		return (1);
 	}
 	if (p->p->number_of_times_each_philosopher_must_eat == 0)

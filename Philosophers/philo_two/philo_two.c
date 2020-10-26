@@ -61,6 +61,7 @@
 int g_dead = 0;
 int g_eat_count = 0;
 int g_eating_counter = 0;
+int g_error = 0;
 
 static void	*dead_check(void *arg)
 {
@@ -105,10 +106,7 @@ static void	*philo_start(void *arg)
 	p->start_time = get_time();
 	p->last_meal_time = get_time();
 	if (pthread_create(&id, NULL, dead_check, p))
-	{
-		error("Creation of thread failed\n");
-		return (0);
-	}
+		return (error("Creation of thread failed\n"));
 	while (1)
 	{
 		if (eat(p) == 1)
@@ -142,6 +140,8 @@ static int	create_philosophers(philosopher *p)
 	}
 	pthread_join(id, NULL);
 	free_philo(p);
+	if (g_error == 1)
+		return (0);
 	return (1);
 }
 
@@ -159,6 +159,7 @@ int			main(int argc, char **argv)
 	if (p->p->number_of_philosophers < 2)
 	{
 		error("Not enough philosophers\n");
+		free_philo(p);
 		return (1);
 	}
 	if (p->p->number_of_times_each_philosopher_must_eat == 0)

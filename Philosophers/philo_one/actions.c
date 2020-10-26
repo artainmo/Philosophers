@@ -12,7 +12,7 @@
 
 #include "philo_one.h"
 
-int	dies(philosopher *p, char *tim)
+int	dies(t_philosopher *p, char *tim)
 {
 	pthread_mutex_lock(p->dead_lock);
 	if (g_dead == 1)
@@ -26,14 +26,14 @@ int	dies(philosopher *p, char *tim)
 	return (1);
 }
 
-int	think(philosopher *p)
+int	think(t_philosopher *p)
 {
 	if (status_change(p, "\tis thinking\n") == 1)
 		return (1);
 	return (0);
 }
 
-int	sleeps(philosopher *p)
+int	sleeps(t_philosopher *p)
 {
 	if (status_change(p, "\tis sleeping\n") == 1)
 		return (1);
@@ -41,7 +41,7 @@ int	sleeps(philosopher *p)
 	return (0);
 }
 
-int	eat(philosopher *p)
+int	eat(t_philosopher *p)
 {
 	if (specific_mutex(p, LOCK) == 1)
 		return (1);
@@ -57,7 +57,7 @@ int	eat(philosopher *p)
 	return (0);
 }
 
-int	take_fork(philosopher *p)
+int	take_fork(t_philosopher *p)
 {
 	if (status_change(p, "\thas taken a fork\n") == 1)
 		return (1);

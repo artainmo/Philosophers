@@ -42,10 +42,19 @@ int						dead_message(philosopher *p, char *tim)
 	return (0);
 }
 
+/*
+**https://unix.stackexchange.com/questions/275184/
+**when-interrupting-a-process-does-a-memory-leak-occur
+**Killing all the processes frees the memory, nomatter how a process dies
+**all of its associated memory will be freed besides tmp files.
+**Freeing is necessary in long-running programs, but once a program/process
+**is about to die freeing is not necessary
+*/
+
 void					*error(char *str)
 {
 	write(1, str, ft_strlen(str));
-	return (0);
+	kill(0, SIGKILL);
 }
 
 void					free_philo(philosopher *p)

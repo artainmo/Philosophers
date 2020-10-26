@@ -35,9 +35,16 @@ int						dead_message(philosopher *p, char *tim)
 	return (0);
 }
 
+/*
+**g_dead equal to one to stop all the processes
+**and g_error to one so that the main returns 1 in the end
+*/
+
 void					*error(char *str)
 {
 	write(1, str, ft_strlen(str));
+	g_dead = 1;
+	g_error = 1;
 	return (0);
 }
 

@@ -12,30 +12,30 @@
 
 #include "philo_one.h"
 
-params		*init_params(int argc, char **argv)
+t_params		*init_params(int argc, char **argv)
 {
-	params *ret;
+	t_params *ret;
 
-	if ((ret = malloc(sizeof(params))) == 0)
+	if ((ret = malloc(sizeof(t_params))) == 0)
 		return (error("Malloced failed\n"));
-	ret->number_of_philosophers = ft_atoi(argv[1]);
+	ret->number_of_t_philosophers = ft_atoi(argv[1]);
 	ret->time_to_die = ft_atoi(argv[2]);
 	ret->time_to_eat = ft_atoi(argv[3]) * 1000;
 	ret->time_to_sleep = ft_atoi(argv[4]) * 1000;
 	if (argc == 5)
-		ret->number_of_times_each_philosopher_must_eat = -1;
+		ret->number_of_times_each_t_philosopher_must_eat = -1;
 	else
-		ret->number_of_times_each_philosopher_must_eat = ft_atoi(argv[5]);
+		ret->number_of_times_each_t_philosopher_must_eat = ft_atoi(argv[5]);
 	return (ret);
 }
 
-forks		*init_forks(int number)
+t_forks		*init_forks(int number)
 {
 	int		i;
-	forks	*fork;
+	t_forks	*fork;
 
 	i = 2;
-	if ((fork = malloc(sizeof(forks))) == 0)
+	if ((fork = malloc(sizeof(t_forks))) == 0)
 		return (error("Malloc failed\n"));
 	fork->head = fork;
 	fork->number = 1;
@@ -43,7 +43,7 @@ forks		*init_forks(int number)
 		return (error("Malloc failed"));
 	while (i <= number)
 	{
-		if ((fork->next = malloc(sizeof(forks))) == 0)
+		if ((fork->next = malloc(sizeof(t_forks))) == 0)
 			return (error("Malloc failed\n"));
 		fork->next->head = fork->head;
 		fork = fork->next;
@@ -58,15 +58,15 @@ forks		*init_forks(int number)
 	return (fork->head);
 }
 
-philosopher	*init_philo(int argc, char **argv)
+t_philosopher	*init_philo(int argc, char **argv)
 {
-	philosopher *philo;
+	t_philosopher *philo;
 
-	if ((philo = malloc(sizeof(philosopher))) == 0)
+	if ((philo = malloc(sizeof(t_philosopher))) == 0)
 		return (error("Malloc failed\n"));
 	if ((philo->p = init_params(argc, argv)) == 0)
 		return (error("Malloc failed\n"));
-	if ((philo->fork = init_forks(philo->p->number_of_philosophers)) == 0)
+	if ((philo->fork = init_forks(philo->p->number_of_t_philosophers)) == 0)
 		return (error("Malloc failed\n"));
 	if ((philo->write_lock = malloc(sizeof(pthread_mutex_t))) == 0)
 		return (error("Malloc failed\n"));
@@ -79,11 +79,11 @@ philosopher	*init_philo(int argc, char **argv)
 	return (philo);
 }
 
-philosopher	*new_philo(philosopher *old_philo, int id)
+t_philosopher	*new_philo(t_philosopher *old_philo, int id)
 {
-	philosopher *philo;
+	t_philosopher *philo;
 
-	if ((philo = malloc(sizeof(philosopher))) == 0)
+	if ((philo = malloc(sizeof(t_philosopher))) == 0)
 		return (error("Malloc failed\n"));
 	philo->p = old_philo->p;
 	philo->fork = old_philo->fork;
@@ -93,17 +93,17 @@ philosopher	*new_philo(philosopher *old_philo, int id)
 	return (philo);
 }
 
-int			specific_mutex(philosopher *p, int action)
+int			specific_mutex(t_philosopher *p, int action)
 {
-	forks	*tmp;
-	forks	*it;
+	t_forks	*tmp;
+	t_forks	*it;
 	int		fork1;
 	int		fork2;
 
 	it = p->fork;
 	tmp = p->fork->head;
 	fork1 = p->id;
-	if (p->id == p->p->number_of_philosophers)
+	if (p->id == p->p->number_of_t_philosophers)
 		fork2 = 1;
 	else
 		fork2 = p->id + 1;

@@ -25,6 +25,7 @@
 
 extern int g_eating_counter;
 extern int g_dead;
+extern int g_error;
 
 typedef	struct	s_params
 {
@@ -67,6 +68,6 @@ int				ft_atoi(const char *str);
 int				ft_strlen(const char *str);
 char			*ft_itoa(int n);
 char			*ft_strjoin(char const *s1, char const *s2);
-char			*ft_strdup(const char *src);	
+char			*ft_strdup(const char *src);
 
 #endif

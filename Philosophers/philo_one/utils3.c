@@ -12,7 +12,7 @@
 
 #include "philo_one.h"
 
-int						dead_message(philosopher *p, char *tim)
+int						dead_message(t_philosopher *p, char *tim)
 {
 	char	*timestamp;
 	char	*name;
@@ -48,9 +48,9 @@ void					*error(char *str)
 	return (0);
 }
 
-void					free_philo(philosopher *p)
+void					free_philo(t_philosopher *p)
 {
-	forks	*tmp;
+	t_forks	*tmp;
 
 	free(p->p);
 	while (p->fork != 0)
