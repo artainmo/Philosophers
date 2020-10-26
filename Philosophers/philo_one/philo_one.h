@@ -6,7 +6,7 @@
 /*   By: artainmo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/25 12:06:54 by artainmo          #+#    #+#             */
-/*   Updated: 2020/10/25 13:34:23 by artainmo         ###   ########.fr       */
+/*   Updated: 2020/10/26 10:38:12 by artainmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ typedef struct	s_philosopher
 	long long int	last_meal_time;
 	int				is_eating;
 	t_forks			*fork;
-	t_params			*p;
+	t_params		*p;
 	pthread_mutex_t	*write_lock;
 	pthread_mutex_t	*dead_lock;
 }				t_philosopher;
@@ -70,9 +70,9 @@ int				sleeps(t_philosopher *p);
 int				eat(t_philosopher *p);
 int				take_fork(t_philosopher *p);
 
-t_philosopher		*init_philo(int argc, char **argv);
-t_philosopher		*new_philo(t_philosopher *old_philo, int id);
-t_params			*init_params(int argc, char **argv);
+t_philosopher	*init_philo(int argc, char **argv);
+t_philosopher	*new_philo(t_philosopher *old_philo, int id);
+t_params		*init_params(int argc, char **argv);
 
 int				specific_mutex(t_philosopher *p, int action);
 

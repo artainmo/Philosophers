@@ -6,8 +6,7 @@ one
 two
 three
 
-# Check if working
 # Finish the norm
 # Check if working
-# Check subject
 # Check if working with valgrind
+# Check subject
