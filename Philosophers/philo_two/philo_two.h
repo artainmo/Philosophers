@@ -6,7 +6,7 @@
 /*   By: artainmo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/25 15:25:05 by artainmo          #+#    #+#             */
-/*   Updated: 2020/10/26 08:54:39 by artainmo         ###   ########.fr       */
+/*   Updated: 2020/10/26 11:18:24 by artainmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef	struct	s_philosopher
 	int				is_eating;
 	sem_t			*write_lock;
 	sem_t			*dead_lock;
-	t_params			*p;
+	t_params		*p;
 }				t_philosopher;
 
 int				dies(t_philosopher *p, char *tim);
@@ -53,9 +53,9 @@ int				think(t_philosopher *p);
 int				sleeps(t_philosopher *p);
 int				eat(t_philosopher *p);
 
-t_philosopher		*init_philo(int argc, char **argv);
-t_philosopher		*new_philo(t_philosopher *old_philo, int id);
-t_params			*init_params(int argc, char **argv);
+t_philosopher	*init_philo(int argc, char **argv);
+t_philosopher	*new_philo(t_philosopher *old_philo, int id);
+t_params		*init_params(int argc, char **argv);
 
 long long int	get_time();
 void			free_philo(t_philosopher *p);

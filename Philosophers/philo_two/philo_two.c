@@ -6,7 +6,7 @@
 /*   By: artainmo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/25 15:24:11 by artainmo          #+#    #+#             */
-/*   Updated: 2020/10/25 15:55:28 by artainmo         ###   ########.fr       */
+/*   Updated: 2020/10/26 11:20:42 by artainmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,33 @@ int g_eat_count = 0;
 int g_eating_counter = 0;
 int g_error = 0;
 
+static int	dead_check2(t_philosopher *p, long long int current_time,
+		long long int since_last_meal)
+{
+	current_time = get_time();
+	since_last_meal = current_time - p->last_meal_time;
+	if (p->p->time_to_die <= since_last_meal && !p->is_eating)
+	{
+		dies(p, ft_itoa(current_time - p->start_time));
+		return (1);
+	}
+	if (p->p->number_of_times_each_t_philosopher_must_eat != -1
+			&& p->p->number_of_times_each_t_philosopher_must_eat
+						* p->p->number_of_t_philosophers <= g_eating_counter)
+	{
+		sem_wait(p->write_lock);
+		if (g_eat_count == 0 && g_dead != 1)
+			write(1, "times each philosopher must eat attained\n", 41);
+		g_eat_count = 1;
+		sem_post(p->write_lock);
+		return (1);
+	}
+	return (0);
+}
+
 static void	*dead_check(void *arg)
 {
-	t_philosopher		*p;
+	t_philosopher	*p;
 	long long int	current_time;
 	long long int	since_last_meal;
 
@@ -73,26 +97,8 @@ static void	*dead_check(void *arg)
 	p->is_eating = 0;
 	while (1)
 	{
-		current_time = get_time();
-		since_last_meal = current_time - p->last_meal_time;
-		if (p->p->time_to_die <= since_last_meal && !p->is_eating)
-		{
-			// printf("~%llu\n", current_time);
-			// printf("~~%llu\n", p->last_meal_time);
-			// printf("~~%llu\n", since_last_meal);
-			dies(p, ft_itoa(current_time - p->start_time));
+		if (dead_check2(p, current_time, since_last_meal) == 1)
 			break ;
-		}
-		if (p->p->number_of_times_each_t_philosopher_must_eat != -1
-				&& p->p->number_of_times_each_t_philosopher_must_eat * p->p->number_of_t_philosophers <= g_eating_counter)
-		{
-			sem_wait(p->write_lock);
-			if (g_eat_count == 0 && g_dead != 1) //To block the write of eat_count, because bug occurs whereas after a philospher dies, number of philospher becomes 0 and thread enters the eat_count write, for unknown reason
-				write(1, "number of times each philosopher must eat attained\n", 51);
-			g_eat_count = 1;
-			sem_post(p->write_lock);
-			break ;
-		}
 	}
 	return (0);
 }
@@ -100,7 +106,7 @@ static void	*dead_check(void *arg)
 static void	*philo_start(void *arg)
 {
 	t_philosopher	*p;
-	pthread_t	id;
+	pthread_t		id;
 
 	p = (t_philosopher *)arg;
 	p->start_time = get_time();
@@ -123,8 +129,8 @@ static void	*philo_start(void *arg)
 static int	create_t_philosophers(t_philosopher *p)
 {
 	t_philosopher	*new;
-	pthread_t	id;
-	int			i;
+	pthread_t		id;
+	int				i;
 
 	i = 1;
 	while (i <= p->p->number_of_t_philosophers)

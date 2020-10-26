@@ -6,7 +6,7 @@
 /*   By: artainmo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/25 15:32:00 by artainmo          #+#    #+#             */
-/*   Updated: 2020/10/26 08:53:18 by artainmo         ###   ########.fr       */
+/*   Updated: 2020/10/26 11:19:05 by artainmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int			ft_atoi(const char *str)
 		return (res);
 }
 
-char	*ft_strdup(const char *src)
+char		*ft_strdup(const char *src)
 {
 	int		i;
 	char	*str;
