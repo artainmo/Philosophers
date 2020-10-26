@@ -6,7 +6,6 @@ one
 two
 three
 
-# Finish the norm
-# Check if working
+# 1000 philosophers 1 and 2
 # Check if working with valgrind
 # Check subject

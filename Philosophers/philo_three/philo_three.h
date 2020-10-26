@@ -6,7 +6,7 @@
 /*   By: artainmo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/25 16:26:54 by artainmo          #+#    #+#             */
-/*   Updated: 2020/10/26 12:14:51 by artainmo         ###   ########.fr       */
+/*   Updated: 2020/10/26 12:37:01 by artainmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void			free_philo(t_philosopher *p);
 void			error(char *str);
 long long int	get_miliseconds(struct timeval t);
 int				status_change(t_philosopher *p, char *message);
-int				dead_message(t_philosopher *p, char *tim);
+void			dead_message(t_philosopher *p, char *tim);
 
 int				ft_atoi(const char *str);
 int				ft_strlen(const char *str);

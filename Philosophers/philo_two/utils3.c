@@ -14,7 +14,6 @@
 
 int						dead_message(t_philosopher *p, char *tim)
 {
-	char	*timestamp;
 	char	*name;
 	char	*line;
 	char	*tmp;
@@ -29,6 +28,7 @@ int						dead_message(t_philosopher *p, char *tim)
 	line = ft_strjoin(line, "\tdied\n");
 	free(tmp);
 	write(1, line, ft_strlen(line));
+	free(line);
 	free(name);
 	free(tim);
 	sem_post(p->write_lock);

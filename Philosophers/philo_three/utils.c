@@ -50,6 +50,7 @@ static void				put_message(t_philosopher *p, char *message)
 	line = ft_strjoin(line, message);
 	free(tmp);
 	write(1, line, ft_strlen(line));
+	free(line);
 	free(name);
 	free(timestamp);
 }

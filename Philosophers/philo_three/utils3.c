@@ -6,7 +6,7 @@
 /*   By: artainmo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/25 16:27:07 by artainmo          #+#    #+#             */
-/*   Updated: 2020/10/26 08:39:46 by artainmo         ###   ########.fr       */
+/*   Updated: 2020/10/26 12:37:28 by artainmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,8 @@
 **and causes bugs... 0 causes main and child processes to finish
 */
 
-int						dead_message(t_philosopher *p, char *tim)
+void					dead_message(t_philosopher *p, char *tim)
 {
-	char	*timestamp;
 	char	*name;
 	char	*line;
 	char	*tmp;
@@ -35,11 +34,11 @@ int						dead_message(t_philosopher *p, char *tim)
 	line = ft_strjoin(line, "\tdied\n");
 	free(tmp);
 	write(1, line, ft_strlen(line));
+	free(line);
 	free(name);
 	free(tim);
 	free_philo(p);
 	kill(0, SIGKILL);
-	return (0);
 }
 
 /*
