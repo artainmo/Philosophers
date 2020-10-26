@@ -6,7 +6,7 @@
 /*   By: artainmo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/25 16:26:54 by artainmo          #+#    #+#             */
-/*   Updated: 2020/10/25 18:34:14 by artainmo         ###   ########.fr       */
+/*   Updated: 2020/10/26 08:54:41 by artainmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,6 @@ int				ft_atoi(const char *str);
 int				ft_strlen(const char *str);
 char			*ft_itoa(int n);
 char			*ft_strjoin(char const *s1, char const *s2);
+char			*ft_strdup(const char *src);
 
 #endif
