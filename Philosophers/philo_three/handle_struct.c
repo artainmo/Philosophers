@@ -56,6 +56,7 @@ t_philosopher	*new_philo(t_philosopher *old_philo, int id)
 	if ((philo = malloc(sizeof(t_philosopher))) == 0)
 		error("Malloc failed\n");
 	philo->eating_counter = 0;
+	philo->do_not_die = 0;
 	philo->p = old_philo->p;
 	philo->forks = old_philo->forks;
 	philo->id = id;

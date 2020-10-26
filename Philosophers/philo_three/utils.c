@@ -57,6 +57,7 @@ static void				put_message(t_philosopher *p, char *message)
 /*
 **usleep -> The first process waits on time_to_die round to give all the time
 **other processes could have had to eat last meal
+**do_not_die = 1 -> Protection against philospher dying while waiting
 */
 
 int						status_change(t_philosopher *p, char *message)
@@ -66,6 +67,7 @@ int						status_change(t_philosopher *p, char *message)
 	{
 		sem_post(p->write_lock);
 		sem_wait(p->eat_max);
+		p->do_not_die = 1;
 		usleep(p->p->time_to_die * 1000);
 		sem_wait(p->write_lock);
 		write(1, "number of times each philosopher must eat attained\n", 51);

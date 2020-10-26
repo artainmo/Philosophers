@@ -6,7 +6,7 @@
 /*   By: artainmo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/25 16:36:07 by artainmo          #+#    #+#             */
-/*   Updated: 2020/10/26 08:48:06 by artainmo         ###   ########.fr       */
+/*   Updated: 2020/10/26 11:24:55 by artainmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ char		*ft_strjoin(char const *s1, char const *s2)
 	if (!s2)
 		return (ft_strdup(s1));
 	if (!(str = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1))))
-		error("Malloc failed\n");;
+		error("Malloc failed\n");
 	ft_cat(s1, str, &i);
 	while (s2[l])
 	{

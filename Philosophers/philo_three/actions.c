@@ -14,6 +14,8 @@
 
 int			dies(t_philosopher *p, char *tim)
 {
+	if (p->do_not_die == 1)
+		return (1);
 	sem_wait(p->dead_lock);
 	dead_message(p, tim);
 	sem_post(p->dead_lock);

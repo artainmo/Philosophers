@@ -6,7 +6,7 @@
 /*   By: artainmo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/25 16:25:08 by artainmo          #+#    #+#             */
-/*   Updated: 2020/10/25 18:30:23 by artainmo         ###   ########.fr       */
+/*   Updated: 2020/10/26 11:25:49 by artainmo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@
 
 static void	*dead_check(void *arg)
 {
-	t_philosopher		*p;
+	t_philosopher	*p;
 	long long int	current_time;
 	long long int	since_last_meal;
 
@@ -70,7 +70,7 @@ static void	*dead_check(void *arg)
 static void	*philo_start(void *arg)
 {
 	t_philosopher	*p;
-	pthread_t	id;
+	pthread_t		id;
 
 	p = (t_philosopher *)arg;
 	p->start_time = get_time();
@@ -93,8 +93,8 @@ static void	*philo_start(void *arg)
 static int	create_t_philosophers(t_philosopher *p)
 {
 	t_philosopher	*new;
-	pid_t		pid;
-	int			i;
+	pid_t			pid;
+	int				i;
 
 	i = 1;
 	while (i <= p->p->number_of_t_philosophers)
