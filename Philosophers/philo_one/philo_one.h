@@ -26,6 +26,7 @@
 extern int g_eating_counter;
 extern int g_dead;
 extern int g_error;
+extern int g_max_eat;
 
 /*
 **A chained list with mutex is used to identify the different forks around the

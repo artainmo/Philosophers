@@ -15,7 +15,7 @@
 int			dies(t_philosopher *p, char *tim)
 {
 	sem_wait(p->dead_lock);
-	if (g_dead == 1)
+	if (g_dead == 1 || g_max_eat == 1)
 	{
 		sem_post(p->dead_lock);
 		free(tim);

@@ -65,5 +65,8 @@ t_philosopher	*new_philo(t_philosopher *old_philo, int id)
 	philo->id = id;
 	philo->write_lock = old_philo->write_lock;
 	philo->dead_lock = old_philo->dead_lock;
+	philo->dead_lock = old_philo->dead_lock;
+	philo->start_time = old_philo->start_time;
+	philo->last_meal_time = old_philo->last_meal_time;
 	return (philo);
 }

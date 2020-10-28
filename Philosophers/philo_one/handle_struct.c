@@ -79,7 +79,7 @@ t_philosopher	*init_philo(int argc, char **argv)
 	return (philo);
 }
 
-t_philosopher	*new_philo(t_philosopher *old_philo, int id)
+t_philosopher	*new_philo(t_philosopher *old_philo, int i)
 {
 	t_philosopher *philo;
 
@@ -87,8 +87,10 @@ t_philosopher	*new_philo(t_philosopher *old_philo, int id)
 		return (error("Malloc failed\n"));
 	philo->p = old_philo->p;
 	philo->fork = old_philo->fork;
-	philo->id = id;
+	philo->id = i;
 	philo->write_lock = old_philo->write_lock;
 	philo->dead_lock = old_philo->dead_lock;
+	philo->start_time = old_philo->start_time;
+	philo->last_meal_time = old_philo->last_meal_time;
 	return (philo);
 }

@@ -3,3 +3,4 @@
 ./philo_one 2 8000 3000 3000 5 //verify eat count feature
 ./philo_one 7 8000 3000 3000 1 //verify eat count feature
 ./philo_one 7 8000 3000 3000 0 //verify eat count feature
+./philo_one 20 15000 2000 2000 10 //test chronological time

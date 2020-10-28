@@ -45,7 +45,6 @@ typedef struct	s_philosopher
 	int				do_not_die;
 	sem_t			*write_lock;
 	int				*g_dead;
-	int				*g_eat_count;
 	sem_t			*dead_lock;
 	sem_t			*eat_max;
 	t_params		*p;

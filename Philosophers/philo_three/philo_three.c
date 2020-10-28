@@ -73,8 +73,6 @@ static void	*philo_start(void *arg)
 	pthread_t		id;
 
 	p = (t_philosopher *)arg;
-	p->start_time = get_time();
-	p->last_meal_time = get_time();
 	if (pthread_create(&id, NULL, dead_check, p))
 		error("Creation of thread failed\n");
 	while (1)
@@ -97,6 +95,8 @@ static int	create_t_philosophers(t_philosopher *p)
 	int				i;
 
 	i = 1;
+	p->start_time = get_time();
+	p->last_meal_time = get_time();
 	while (i <= p->p->number_of_t_philosophers)
 	{
 		new = new_philo(p, i);

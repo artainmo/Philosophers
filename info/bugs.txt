@@ -1,0 +1,20 @@
+/*
+**BUG IN SECOND PHILOSOPHER
+**Rare not understood, probably linked to semaphore lib, bug of directly
+**quiting the program with a philospher dead at time_before_dead
+**Caused by fault in calculation of
+**"since_last_meal = current_time - p->last_meal_time;" while they all are
+**equal to long long int -> show with commented printf that error makes no
+**sense and only occurs in rare random cases
+**Looks similar to not understood bug -> bug occurs whereas after a philospher
+**dies, number of philospher becomes 0 and thread enters the eat_count write,
+**for unknown reason
+**Those bugs do not exist with use of mutex and
+**are thus probably associated with semaphore lib
+**NOT ANYMORE
+*/
+
+/*
+**Unsigned is not used for time calculation, because in very rare cases
+**negative numbers were generated, that created random values in unsigned form
+*/

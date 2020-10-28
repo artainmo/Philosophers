@@ -36,7 +36,7 @@
 */
 
 int g_dead = 0;
-int g_eat_count = 0;
+int g_max_eat = 0;
 /*
 **To protect the write of "number of times each philosopher must eat attained
 */
@@ -53,10 +53,7 @@ int g_error = 0;
 **Second thread for each t_philosopher to constantly check if one is dying
 **or eating_count is attained
 */
-/*
-**Unsigned is not used for time calculation, because in very rare cases
-**negative numbers were generated, that created random values in unsigned form
-*/
+
 
 static int		dead_check2(t_philosopher *p, long long int current_time,
 		long long int since_last_meal)
@@ -73,9 +70,9 @@ static int		dead_check2(t_philosopher *p, long long int current_time,
 						* p->p->number_of_t_philosophers <= g_eating_counter)
 	{
 		pthread_mutex_lock(p->write_lock);
-		if (g_eat_count == 0 && g_dead != 1)
+		if (g_max_eat == 0 && g_dead != 1)
 			write(1, "times each philosopher must eat attained\n", 41);
-		g_eat_count = 1;
+		g_max_eat = 1;
 		pthread_mutex_unlock(p->write_lock);
 		return (1);
 	}
@@ -104,8 +101,6 @@ static void		*philo_start(void *arg)
 	pthread_t		id;
 
 	p = (t_philosopher *)arg;
-	p->start_time = get_time();
-	p->last_meal_time = get_time();
 	if (pthread_create(&id, NULL, dead_check, p))
 		return (error("Creation of thread failed\n"));
 	while (1)
@@ -121,6 +116,14 @@ static void		*philo_start(void *arg)
 	return (0);
 }
 
+/*
+**Delay that happens between thread creation is equal to 4ms per 10philosophers
+**This is not a problem as some philosopers will have to wait until they can
+**start eating.
+**If time to die is less than time of all philosoper appearance, this is not
+**a problem as one of the philosopher will die in meantime and stop everything
+*/
+
 static int		create_t_philosophers(t_philosopher *p)
 {
 	t_philosopher	*new;
@@ -128,6 +131,8 @@ static int		create_t_philosophers(t_philosopher *p)
 	int				i;
 
 	i = 1;
+	p->start_time = get_time();
+	p->last_meal_time = get_time();
 	while (i <= p->p->number_of_t_philosophers)
 	{
 		new = new_philo(p, i);
