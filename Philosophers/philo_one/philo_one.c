@@ -54,7 +54,6 @@ int g_error = 0;
 **or eating_count is attained
 */
 
-
 static int		dead_check2(t_philosopher *p, long long int current_time,
 		long long int since_last_meal)
 {
