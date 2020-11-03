@@ -115,13 +115,34 @@ static int	create_t_philosophers(t_philosopher *p)
 	return (1);
 }
 
-int			main(int argc, char **argv)
+int wrong_input(int argc, char **argv)
 {
-	t_philosopher *p;
+	int i;
+	int l;
 
-	if (argc != 5 && argc != 6)
+	i = 1;
+	l = 0;
+	while (i < argc)
 	{
-		write(1, "Error in program arguments\n", 27);
+		while (argv[i][l])
+		{
+			if (argv[i][l] < 48 || argv[i][l] > 57)
+				return (1);
+			l++;
+		}
+		l = 0;
+		i++;
+	}
+	return (0);
+}
+
+int				main(int argc, char **argv)
+{
+	t_philosopher	*p;
+
+	if ((argc != 5 && argc != 6) || wrong_input(argc, argv))
+	{
+		error("Error in program arguments\n");
 		return (1);
 	}
 	if ((p = init_philo(argc, argv)) == 0)
