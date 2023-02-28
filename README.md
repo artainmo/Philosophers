@@ -8,9 +8,9 @@ To learn more about the learned theory, read the comments inside the code.
 
 ## Usage 
 
-Go into folder related to philo one, two or three and `make`.
+Go into folder related to philo one, two or three and `make` to create the executable.
 
-Examples of tests.
+Examples of tests using the executable.
 ```
 ./philo_one 6 1000 2000 2000 5 //Verify rapid death
 ./philo_one 3 8000 2000 2000 //Infinity
