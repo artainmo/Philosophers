@@ -18,7 +18,7 @@ Examples of tests using the executable.
 ./philo_one 7 8000 3000 3000 1 //verify eat count feature
 ./philo_one 20 15000 2000 2000 10 //test chronological time
 ./philo_one 4 410 200 200 //Should not die, by correction pdf 
-// 410 dies occasionaly, because 420 never dies seems to be related to free memory space that can slow down the program and cause occosional death of philospher
+// 410 dies occasionaly, because 420 never dies seems to be related to free memory space that can slow down the program and cause occosional death of philosopher
 
 //Test 0 philos, 0 different times, test with negative values, test with letters
 //Can behave differently on different OSs
